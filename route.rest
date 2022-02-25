@@ -1,0 +1,27 @@
+GET http://localhost:4000/products
+
+###
+GET http://localhost:4000/products/62188e0eb9707c6571c103f0
+
+
+###
+POST http://localhost:4000/products
+Content-type: application/json
+
+{ 
+    "name": "Anonymous User",
+    "title":"Shirt",
+    "price": "R900",
+    "description": "a kind of cotton fabric" 
+}
+
+###
+DELETE http://localhost:4000/products/62188e5ae91e0e50dee8044c
+
+###
+PATCH http://localhost:4000/products/6218924a4dd9b9138e527dab
+Content-type: application/json
+
+{
+    "name": "Random User"
+}
