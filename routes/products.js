@@ -21,10 +21,11 @@ res.json(res.product.name)
   //creating one
   router.post("/", async (req, res) => {
   const product = new Product({
-    name: req.body.name,
     title: req.body.title,
-    price: req.body.price,
+    category: req.body.category,
     description: req.body.description,
+    img: req.body.image,
+    price: req.body.price,
   });
   try {
     const newProduct = await product.save();
