@@ -1,12 +1,9 @@
-require('dotenv').config()
-
+// require('dotenv').config()
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
 // const bodyParser = require('body-parser')
-mongoose.connect(
-  "mongodb+srv://zanelemoni:1A9yaTmTFa9gYLI5@zanelemoni.bqocf.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-  { useNewUrlParser: true }
+mongoose.connect("mongodb+srv://zanelemoni:1A9yaTmTFa9gYLI5@zanelemoni.bqocf.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",{ useNewUrlParser: true }
 );
 const db = mongoose.connection
 db.on('error', (error) => console.error(error))
