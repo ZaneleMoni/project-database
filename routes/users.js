@@ -1,5 +1,6 @@
 const express = require("express");
 const res = require("express/lib/response");
+const user = require("../models/user");
 const router = express.Router();
 const User = require("../models/user");
 
@@ -15,23 +16,45 @@ router.get("/", async (req, res) => {
 })
 
 router.get("/:id", (req, res) => {
-res.json(res.user.name);
+res.json(res.user);
 
-});
+})
 
-router.post("/", async (req, res) => {
-    const user = new User({
-         user_id: req.body.id,
-        user_fullname: req.body.name,
-        email: req.body.email,
-        password: req.body.email,
-        phone_number: req.body.phone_number,
-        join_date: req.body.join_date,
-        cart: req.body.cart,
-  });
+router.post("/signup", async (req, res) => {
+  
   try {
-    const newUser = await user.save();
-    res.status(201).json(newUser);
+    const salt = await bcrypt.genSalt()
+    const hashedPassword = await bcrypt.hash(req.body.password, salt)
+    const user = new User({
+      fullname: req.body.fullname,
+      email: req.body.email,
+      password: hashedPassword,
+      phone_number: req.body.phone_number,
+    })       
+    const newUser = await user.save()
+    res.status(201).json(newUser)
+    console.log(salt)
+    console.log(hashedPassword)
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+})
+
+router.post("/signin", async (req, res) => {
+  try {
+    user.findOne({ fullname: req.body.fullname }, (err, customer) => {
+      if (error) return handleError(error);
+      if (!customer) {
+        return res.status(404).send({ message: "User not found" });
+      }
+      let passwordIsValid = bcrypt.compareSync(
+        req.body.password,
+        customer.password
+      );
+      if (!passwordIsValid) {
+        return res.status(401).send({message: "invalid password" })
+      }
+   })
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
