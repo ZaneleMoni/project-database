@@ -14,6 +14,10 @@ db.once('open',() => console.log('Connected to Database'))
 // }))
 // app.use(bodyParser.json())
 
+app.get("/", (req, res) => {
+  res.json({ message: "Welcome to Zanele application." });
+});
+
 app.use(express.json())
 const productsRouter = require('./routes/products')
 app.use('/products', productsRouter)
