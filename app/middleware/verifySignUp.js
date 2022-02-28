@@ -1,4 +1,4 @@
-const db = require("../models");
+const db = require("../models/user");
 const User = db.user;
 checkDuplicateUsernameOrEmail = (req, res, next) => {
   // Username
@@ -45,6 +45,5 @@ checkRolesExisted = (req, res, next) => {
 };
 const verifySignUp = {
   checkDuplicateUsernameOrEmail: checkDuplicateUsernameOrEmail,
-  checkRolesExisted: checkRolesExisted,
 };
 module.exports = verifySignUp;
