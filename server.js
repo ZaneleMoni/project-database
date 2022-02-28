@@ -25,4 +25,7 @@ const cartRouter = require("./routes/cartRouter");
 const { urlencoded } = require('body-parser')
 app.use('/cart', cartRouter);
 
-app.listen(7000, () => console.log("Server Started at port : 7000"))
+const PORT = process.env.PORT || 7000;
+app.listen(PORT, () =>
+  console.log(`Server Started at port ${PORT}`)
+);
