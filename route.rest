@@ -1,27 +1,27 @@
-GET http://localhost:4000/users
+GET http://localhost:7003/users
 
 ###
-GET http://localhost:7000/users
+GET http://localhost:7003/users
 
 
 ###
-POST http://localhost:7000/users
+POST http://localhost:7003/users
 Content-type: application/json
 
-{ 
-    "user_fullname": "Anonymous User",
+{ "user_id":"1",
+    "user_fullname": "Zanele Moni",
     "email": "zanelemoni4@gmail.com",
     "password": "123456",
-    "phone_number": "0624334358" 
+    "phone_number": "0624334358"
 }
 
 ###
-DELETE http://localhost:7000/users
+DELETE http://localhost:7000/users/621cd167413a1daa40586545
 
 ###
-PATCH http://localhost:7000/users
+PATCH http://localhost:7000/621cd167413a1daa40586545
 Content-type: application/json
 
 {
-    "name": "Random User"
+    "user_fullname": "Craig Braaf"
 }

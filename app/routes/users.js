@@ -17,63 +17,74 @@ router.get("/:user_id", (req, res) => {
   res.json(res.user);
 });
 
-router.post("/signup", async (req, res) => {
-  try {
-    const salt = await bcrypt.genSalt();
-    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+//POST
+  router.post("/", async (req, res) => {
     const user = new User({
+      user_id : req.body.user_id,
       user_fullname: req.body.user_fullname,
-      email: req.body.email,
-      password: hashedPassword,
-      phone_number: req.body.phone_number,
+        email: req.body.email,
+         password: req.body.password,
+         phone_number: req.body.phone_number,
     });
-    const newUser = await user.save();
-    res.status(201).json(newUser);
-    console.log(salt);
-    console.log(hashedPassword);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-});
+    try {
+      const newUser = await user.save();
+      res.status(201).json(newUser);
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
+  });
+// router.post("/signup", async (req, res) => {
+//   try {
+//     const salt = await bcrypt.genSalt();
+//     const hashedPassword = await bcrypt.hash(req.body.password, salt);
+//     const user = new User({
+//       user_fullname: req.body.user_fullname,
+//       email: req.body.email,
+//       password: hashedPassword,
+//       phone_number: req.body.phone_number,
+//     });
+//     const newUser = await user.save();
+//     res.status(201).json(newUser);
+//     console.log(salt);
+//     console.log(hashedPassword);
+//   } catch (error) {
+//     res.status(400).json({ message: error.message });
+//   }
+// });
 
 //
-router.post("/signin", async (req, res) => {
-  try {
-    user.findOne({ user_fullname: req.body.user_fullname }, (err, customer) => {
-      if (error) return handleError(error);
-      if (!customer) {
-        return res.status(404).send({ message: "User not found" });
-      }
-      let passwordIsValid = bcrypt.compareSync(
-        req.body.password,
-        customer.password
-      );
-      if (!passwordIsValid) {
-        return res.status(401).send({ message: "invalid password" });
-      }
-    });
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-});
+// router.post("/signin", async (req, res) => {
+//   try {
+//     user.findOne({ user_fullname: req.body.user_fullname }, (err, customer) => {
+//       if (error) return handleError(error);
+//       if (!customer) {
+//         return res.status(404).send({ message: "User not found" });
+//       }
+//       let passwordIsValid = bcrypt.compareSync(
+//         req.body.password,
+//         customer.password
+//       );
+//       if (!passwordIsValid) {
+//         return res.status(401).send({ message: "invalid password" });
+//       }
+//     });
+//   } catch (error) {
+//     res.status(400).json({ message: error.message });
+//   }
+// });
 
-//
+//updated user
 router.patch("/", async (req, res) => {
   if (req.body.user_fullname != null) {
     res.user.user_fullname = req.body.user_fullname;
+  } if (req.body.email != null) {
+    req.body.email = req.body.email;
+  } if (req.body.password) {
+    req.body.password=req.body.password
+  } if (req.bosy.phone_number != null) {
+    req.user.phone_number = req.body.phone_number;
   }
-  if (req.body.email != null) {
-    res.user.email = req.body.email;
-  }
-  if (req.body.password != null) {
-    res.user.password = req.body.password;
-  }
-  if (req.body.phone_number != null) {
-    res.user.phone_number = req.body.phone_number;
-  }
-  if (req.body.join_date != null) {
-    res.user.join_date = req.body.join_date;
-  }
+         
   try {
     const updatedUser = await res.user.save();
     res.json(updatedUser);
@@ -84,6 +95,7 @@ router.patch("/", async (req, res) => {
 
 router.put("/:user_id", async (req, res) => {});
 
+//DELETING
 router.delete("/:user_id", getUser, async (req, res) => {
   try {
     await res.user.remove();
@@ -92,6 +104,7 @@ router.delete("/:user_id", getUser, async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+//PATCH
 async function getUser(req, res, next) {
   let user;
   try {
