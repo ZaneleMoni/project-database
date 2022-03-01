@@ -9,11 +9,11 @@ POST http://localhost:7003/products
 Content-type: application/json
 
 { 
-"title": "Gucci Bag",
-"price": "R24000.00",
-"category":"Bag",
-"description": "Ophidia Web-stripe GG Supreme canvas tote bag",
-"img":"https://i.postimg.cc/SR3Kfp9n/guccibag.jpg"  
+"title": "Steam Hair Straightener Flat Iron",
+"price": "R479.00",
+"category":"Flat-Iron",
+"description": "Steam Technology: designed with new steam feature, 5 conditioning steam vents on the heating plate",
+"img":"https://i.postimg.cc/hjYVYvQs/flat-iron.jpg"  
 }
 
 ###
