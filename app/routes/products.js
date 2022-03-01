@@ -24,8 +24,9 @@ res.json(res.product.name)
     title: req.body.title,
     category: req.body.category,
     description: req.body.description,
-    img: req.body.image,
+    img: req.body.img,
     price: req.body.price,
+    
   });
   try {
     const newProduct = await product.save();
