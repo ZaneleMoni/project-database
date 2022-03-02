@@ -3,15 +3,15 @@ const productSchema = new mongoose.Schema({
   
   title: {
     type: String,
-    required: [true, "Please include the product name"]
+    required: [true, "Please include the product name"],
   },
   price: {
     type: String,
-    required: [true, "Please include the product price"]
+    required: [true, "Please include the product price"],
   },
   category: {
     type: String,
-    required: true
+    required: true,
   },
   description: {
     type: String,

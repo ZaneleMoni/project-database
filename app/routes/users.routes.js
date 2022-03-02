@@ -2,6 +2,7 @@ const express = require("express");
 const res = require("express/lib/response");
 const user = require("../models/user");
 const router = express.Router();
+const bcrypt = require("bcrypt");
 const User = require("../models/user");
 
 router.get("/", async (req, res) => {
@@ -32,45 +33,46 @@ router.post("/", async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 });
-// router.post("/signup", async (req, res) => {
-//   try {
-//     const salt = await bcrypt.genSalt();
-//     const hashedPassword = await bcrypt.hash(req.body.password, salt);
-//     const user = new User({
-//       user_fullname: req.body.user_fullname,
-//       email: req.body.email,
-//       password: hashedPassword,
-//       phone_number: req.body.phone_number,
-//     });
-//     const newUser = await user.save();
-//     res.status(201).json(newUser);
-//     console.log(salt);
-//     console.log(hashedPassword);
-//   } catch (error) {
-//     res.status(400).json({ message: error.message });
-//   }
-// });
+
+router.post("/signup", async (req, res) => {
+  try {
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    const user = new User({
+      user_fullname: req.body.user_fullname,
+      email: req.body.email,
+      password: hashedPassword,
+      phone_number: req.body.phone_number,
+    });
+    const newUser = await user.save();
+    res.status(201).json(newUser);
+    console.log(salt);
+    console.log(hashedPassword);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
 
 //
-// router.post("/signin", async (req, res) => {
-//   try {
-//     user.findOne({ user_fullname: req.body.user_fullname }, (err, customer) => {
-//       if (error) return handleError(error);
-//       if (!customer) {
-//         return res.status(404).send({ message: "User not found" });
-//       }
-//       let passwordIsValid = bcrypt.compareSync(
-//         req.body.password,
-//         customer.password
-//       );
-//       if (!passwordIsValid) {
-//         return res.status(401).send({ message: "invalid password" });
-//       }
-//     });
-//   } catch (error) {
-//     res.status(400).json({ message: error.message });
-//   }
-// });
+router.post("/signin", async (req, res) => {
+  try {
+    user.findOne({ email: req.body.user_fullname }, (err, customer) => {
+      if (error) return handleError(error);
+      if (!customer) {
+        return res.status(404).send({ message: "User not found" });
+      }
+      let passwordIsValid = bcrypt.compareSync(
+        req.body.password,
+        user.password
+      );
+      if (!passwordIsValid) {
+        return res.status(401).send({ message: "invalid password" });
+      }
+    });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
 
 //updated user
 router.patch("/", async (req, res) => {
@@ -83,7 +85,7 @@ router.patch("/", async (req, res) => {
   if (req.body.password) {
     req.body.password = req.body.password;
   }
-  if (req.bosy.phone_number != null) {
+  if (req.body.phone_number != null) {
     req.user.phone_number = req.body.phone_number;
   }
 
@@ -117,10 +119,5 @@ async function getUser(req, res, next) {
   res.user = user;
   next();
 }
-
-router.get("/:product_id/cart", (req, res) => {});
-router.post("/:product_id/cart", (req, res) => {});
-router.put("/:product_id/cart", (req, res) => {});
-router.delete("/:productid/cart", (req, res) => {});
 
 module.exports = router;
