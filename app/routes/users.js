@@ -18,21 +18,20 @@ router.get("/:user_id", (req, res) => {
 });
 
 //POST
-  router.post("/", async (req, res) => {
-    const user = new User({
-      user_id : req.body.user_id,
-      user_fullname: req.body.user_fullname,
-        email: req.body.email,
-         password: req.body.password,
-         phone_number: req.body.phone_number,
-    });
-    try {
-      const newUser = await user.save();
-      res.status(201).json(newUser);
-    } catch (error) {
-      res.status(400).json({ message: error.message });
-    }
+router.post("/", async (req, res) => {
+  const user = new User({
+    user_fullname: req.body.user_fullname,
+    email: req.body.email,
+    password: req.body.password,
+    phone_number: req.body.phone_number,
   });
+  try {
+    const newUser = await user.save();
+    res.status(201).json(newUser);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
 // router.post("/signup", async (req, res) => {
 //   try {
 //     const salt = await bcrypt.genSalt();
@@ -77,14 +76,17 @@ router.get("/:user_id", (req, res) => {
 router.patch("/", async (req, res) => {
   if (req.body.user_fullname != null) {
     res.user.user_fullname = req.body.user_fullname;
-  } if (req.body.email != null) {
+  }
+  if (req.body.email != null) {
     req.body.email = req.body.email;
-  } if (req.body.password) {
-    req.body.password=req.body.password
-  } if (req.bosy.phone_number != null) {
+  }
+  if (req.body.password) {
+    req.body.password = req.body.password;
+  }
+  if (req.bosy.phone_number != null) {
     req.user.phone_number = req.body.phone_number;
   }
-         
+
   try {
     const updatedUser = await res.user.save();
     res.json(updatedUser);
@@ -92,7 +94,6 @@ router.patch("/", async (req, res) => {
     res.status(400).json({ mesage: error.message });
   }
 });
-
 
 //DELETING
 router.delete("/:id", getUser, async (req, res) => {

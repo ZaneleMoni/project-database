@@ -1,26 +1,25 @@
-GET http://localhost:7003/products
+GET http://localhost:7090/users
 
 ###
-GET http://localhost:7003/products
+GET http://localhost:7090/users
 
 
 ###
-POST http://localhost:7003/products
+POST http://localhost:7090/users
 Content-type: application/json
 
 { 
-"title": "Steam Hair Straightener Flat Iron",
-"price": "R479.00",
-"category":"Flat-Iron",
-"description": "Steam Technology: designed with new steam feature, 5 conditioning steam vents on the heating plate",
-"img":"https://i.postimg.cc/hjYVYvQs/flat-iron.jpg"  
+"user_fullname": "Yasseen Davids",
+"email": "yaseendavids@gmail.com@gmail.com",
+"password":"yaaseen0000",
+"phone_number": "0815253666"
 }
 
 ###
-DELETE http://localhost:7003/users/621cd0d4413a1daa40586543
+DELETE http://localhost:7090/users/621cd167413a1daa40586545
 
 ###
-PATCH http://localhost:7003
+PATCH http://localhost:7090
 Content-type: application/json
 
 {

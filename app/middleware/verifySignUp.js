@@ -31,7 +31,7 @@ checkDuplicateUsernameOrEmail = (req, res, next) => {
 };
 
 
-  next();
+  // next();
 
 const verifySignUp = {
   checkDuplicateUsernameOrEmail: checkDuplicateUsernameOrEmail,
