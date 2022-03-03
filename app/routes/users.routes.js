@@ -56,7 +56,7 @@ router.post("/signup", async (req, res) => {
 //
 router.post("/signin", async (req, res) => {
   try {
-    user.findOne({ email: req.body.user_fullname }, (err, customer) => {
+    user.findOne({ user_fullname: req.body.user_fullname }, (err, customer) => {
       if (error) return handleError(error);
       if (!customer) {
         return res.status(404).send({ message: "User not found" });
