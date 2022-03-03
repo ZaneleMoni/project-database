@@ -23,5 +23,5 @@ PATCH http://localhost:7090
 Content-type: application/json
 
 {
-    "user_fullname": "Craig Braaf"
+    "name": "Brush"
 }
